@@ -2,14 +2,15 @@
 
 SOURCE=${1}
 DEST=${2}
-ROOT='./migrate'
+ROOT='.'
+MIGRATE='./migrate'
 
 CNXML_UTILS=~/rhaptos.cnxmlutils/rhaptos/cnxmlutils/xsl
 CNXML_TO_HTML_XSL=${CNXML_UTILS}/cnxml-to-html5.xsl
 COLLXML_TO_HTML_XSL=${CNXML_UTILS}/collxml-to-html5.xsl
 
-KRAMDOWN_CLEANUP_XSL=${ROOT}/kramdownify.xsl
-POST_CLEANUP_XSL=${ROOT}/post-cleanup.xsl
+KRAMDOWN_CLEANUP_XSL=${MIGRATE}/kramdownify.xsl
+POST_CLEANUP_XSL=${MIGRATE}/post-cleanup.xsl
 
 
 function kramdownize {
@@ -27,6 +28,14 @@ layout: page\
 /g' /dev/stdin
 
 }
+
+
+echo "Copying all the Jekyll-specific templates"
+cp -R ${ROOT}/_includes ${DEST}
+cp -R ${ROOT}/_layouts ${DEST}
+cp -R ${ROOT}/.gitignore ${DEST}/.gitignore
+cp -R ${ROOT}/index.html ${DEST}/index.html
+cp -R ${ROOT}/LICENSE.txt ${DEST}/LICENSE.txt
 
 
 # Copy resources (assume no name collisions)
@@ -59,4 +68,3 @@ done
 # echo "Building ${MODULE_NAME}.md"
 # MODULE_HTML=$(xsltproc ${CNXML_TO_HTML_XSL} ${SOURCE}/${MODULE_NAME}/index.cnxml)
 # echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">${MODULE_HTML}</html>" | kramdownize > ${MODULE_NAME}.md
-

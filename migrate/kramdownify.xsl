@@ -269,5 +269,10 @@
   <xsl:value-of select="$curly-percent"/>
 </xsl:template>
 
+<xsl:template match="*[@data-type='footnote']">
+  <span>
+    <xsl:apply-templates select="@*|node()"/>
+  </span>
+</xsl:template>
 
 </xsl:stylesheet>
