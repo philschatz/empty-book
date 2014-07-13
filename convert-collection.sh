@@ -30,6 +30,17 @@ layout: page\
 }
 
 
+function kramdownize_html {
+  # 1. Clean up the HTML so the kramdown markup is cleaner (remove id's on paragraphs, convert <figure> to <img>)
+  # 2. remove the XHTML namespace from elements so kramdown does not add it via {: xmlns="http://..."}
+  # 3. disable line wrapping
+  # 4. add the markdown="1" to figures so the contents is processed (BUG?)
+  # 5. convert the <title> at the top of the file to a Liquid Template (for Jekyll)
+  xsltproc ${KRAMDOWN_CLEANUP_XSL} - | xsltproc ${POST_CLEANUP_XSL} -
+}
+
+
+
 echo "Copying all the Jekyll-specific templates"
 cp -R ${ROOT}/_includes ${DEST}
 cp -R ${ROOT}/_layouts ${DEST}
@@ -64,7 +75,8 @@ do
 done
 
 
-# MODULE_NAME="m44593"
-# echo "Building ${MODULE_NAME}.md"
-# MODULE_HTML=$(xsltproc ${CNXML_TO_HTML_XSL} ${SOURCE}/${MODULE_NAME}/index.cnxml)
-# echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">${MODULE_HTML}</html>" | kramdownize > ${MODULE_NAME}.md
+# Generate a search index file
+node ${ROOT}/search-index.js ${DEST}/contents/ > ${DEST}/search-index.json
+echo "Finished indexing ${DEST}"
+
+# rm ${DEST}/search-index.json
