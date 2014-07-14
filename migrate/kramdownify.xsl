@@ -196,6 +196,9 @@
 </xsl:template>
 
 
+<xsl:template match="x:img/@data-media-type"/>
+
+
 <xsl:template match="x:em/@data-effect|x:strong/@data-effect"/>
 <xsl:template match="*[@data-type='solution']/@data-label"/>
 
