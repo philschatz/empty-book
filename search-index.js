@@ -1,3 +1,12 @@
+
+
+// ************************************
+// MINIMUM TOKEN LENGTH
+// (affects search index size)
+// ************************************
+var MINIMUM_TOKEN_LENGTH = 6;
+
+
 var path = require('path');
 var fs = require('fs');
 var lunr = require('lunr');
@@ -24,7 +33,7 @@ var index = lunr(function() {
     // - \/
     // - \*
     // - \.
-    if (token.length < 7 || /[\d\=\-\(\)\"\[\]\/\*\.]/.test(token)) {
+    if (token.length < MINIMUM_TOKEN_LENGTH || /[\d\=\-\(\)\"\[\]\/\*\.]/.test(token)) {
       return void 0; // undefined
     } else {
       return token;

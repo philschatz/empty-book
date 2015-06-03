@@ -5,7 +5,7 @@ DEST=${2}
 ROOT='.'
 MIGRATE='./migrate'
 
-CNXML_UTILS=~/rhaptos.cnxmlutils/rhaptos/cnxmlutils/xsl
+CNXML_UTILS=~/github/cnx/rhaptos.cnxmlutils/rhaptos/cnxmlutils/xsl
 CNXML_TO_HTML_XSL=${CNXML_UTILS}/cnxml-to-html5.xsl
 COLLXML_TO_HTML_XSL=${CNXML_UTILS}/collxml-to-html5.xsl
 
@@ -44,9 +44,10 @@ function kramdownize_html {
 echo "Copying all the Jekyll-specific templates"
 cp -R ${ROOT}/_includes ${DEST}
 cp -R ${ROOT}/_layouts ${DEST}
-cp -R ${ROOT}/.gitignore ${DEST}/.gitignore
-cp -R ${ROOT}/index.html ${DEST}/index.html
-cp -R ${ROOT}/LICENSE.txt ${DEST}/LICENSE.txt
+cp ${ROOT}/.gitignore ${DEST}/.gitignore
+cp ${ROOT}/index.html ${DEST}/index.html
+cp ${ROOT}/LICENSE.txt ${DEST}/LICENSE.txt
+cp ${ROOT}/README.md ${DEST}/README.md
 
 
 # Copy resources (assume no name collisions)
