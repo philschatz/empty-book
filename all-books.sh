@@ -11,3 +11,4 @@
 ./do.sh sociology-book          afe4332a-c97f-4fc4-be27-4e4d384a32d8
 ./do.sh statistics-book         30189442-6998-4686-ac05-ed152b91b9de
 ./do.sh us-history-book         a7ba2fb8-8925-4987-b182-5f4429d48daa
+./do.sh psychology-book         4abf04bf-93a0-45c3-9cbc-2cefd46e68cc
