@@ -52,9 +52,11 @@ cp ${ROOT}/README.md ${DEST}/README.md
 
 # Copy resources (assume no name collisions)
 echo "Copying resources (assuming duplicate file names are OK)"
-mkdir ${DEST}/resources
+mkdir -p ${DEST}/resources
 
-cp ${SOURCE}/*/* ${DEST}/resources
+# cp ${SOURCE}/*/* ${DEST}/resources # "Args list is too long" commonly crops up
+find ${SOURCE} -type f -exec cp {} ${DEST}/resources \;
+
 rm ${DEST}/resources/*.cnxml
 
 
@@ -65,18 +67,19 @@ xsltproc ${COLLXML_TO_HTML_XSL} ${SOURCE}/collection.xml | kramdownize > ${DEST}
 
 
 
-mkdir ${DEST}/contents
+mkdir -p ${DEST}/contents
 
 # Loop through all the modules and convert them to markdown
 for MODULE_NAME in $(cd ${SOURCE} && ls | grep '^m')
 do
-  echo "Building ${MODULE_NAME}.md"
+  # echo "Building ${MODULE_NAME}.md"
   MODULE_HTML=$(xsltproc ${CNXML_TO_HTML_XSL} ${SOURCE}/${MODULE_NAME}/index.cnxml)
+  # print out the file for debugging
+  echo ${MODULE_HTML} > ${SOURCE}/${MODULE_NAME}/converted.html
   echo "<html xmlns=\"http://www.w3.org/1999/xhtml\">${MODULE_HTML}</html>" | kramdownize > ${DEST}/contents/${MODULE_NAME}.md
 done
 
-
-# Generate a search index file
+echo "Generating search index file"
 node ${ROOT}/search-index.js ${DEST}/contents/ > ${DEST}/search-index.json
 echo "Finished indexing ${DEST}"
 
